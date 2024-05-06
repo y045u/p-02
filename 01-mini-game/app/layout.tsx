@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Image from "next/image";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,8 +19,41 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="ja">
+      <body className={cn(inter.className, "min-h-dvh")}>
+        <header className="bg-red-700 container h-16 flex items-center bottom-2 justify-between">
+          <div className="flex items-center">
+            <Image src="/images/monster1.png" height={60} width={60} alt="" />
+            <h1 className="text-lg font-bold">mini-game</h1>
+          </div>
+          <ul className="flex gap-4">
+            <li>
+              <Button variant={"ghost"} asChild>
+                <Link href="/about">about1</Link>
+              </Button>
+            </li>
+            <li>
+              <Button variant={"outline"} asChild>
+                <Link href="/about">about2</Link>
+              </Button>
+            </li>
+            <li>
+              <Button variant={"link"} asChild>
+                <Link href="/about">about3</Link>
+              </Button>
+            </li>
+            <li>
+              <Button variant={"default"} asChild>
+                <Link href="/">about4</Link>
+              </Button>
+            </li>
+          </ul>
+        </header>
+        {children}
+        <footer className="bg-red-600 container sticky top-full h-16 flex items-center border-t-2">
+          <p>&copy;y045u</p>
+        </footer>
+      </body>
     </html>
   );
 }
