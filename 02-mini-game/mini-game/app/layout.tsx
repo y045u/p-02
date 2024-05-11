@@ -4,6 +4,8 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { ThemeProvider } from "@/components/theme-provider";
+import { ModeToggle } from "@/components/mode-toggle";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,24 +26,33 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja">
+    <html lang="ja" suppressHydrationWarning>
       <body className={cn(inter.className, "min-h-dvh")}>
-        <header className=" bg-red-600 container h-16 flex items-center justify-between">
-          <div className="">mini-game</div>
-          <ul className="flex items-center gap-4">
-            {navItems.map((item) => (
-              <li key={item.label}>
-                <Button variant={"ghost"} asChild>
-                  <Link href={item.href}>{item.label}</Link>
-                </Button>
-              </li>
-            ))}
-          </ul>
-        </header>
-        {children}
-        <footer className="container h-16 bg-red-700 flex items-center top-full sticky">
-          <div>&copy;y045u</div>
-        </footer>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <header className="container h-16 border-b flex items-center justify-between">
+            <div className="">mini-game</div>
+            <ul className="flex items-center gap-4">
+              {navItems.map((item) => (
+                <li key={item.label}>
+                  <Button variant={"ghost"} asChild>
+                    <Link href={item.href}>{item.label}</Link>
+                  </Button>
+                </li>
+              ))}
+            </ul>
+          </header>
+          {children}
+          <footer className="container h-16 border-t flex items-center justify-between top-full sticky">
+            <div>&copy;y045u</div>
+
+            <ModeToggle />
+          </footer>
+        </ThemeProvider>
       </body>
     </html>
   );
